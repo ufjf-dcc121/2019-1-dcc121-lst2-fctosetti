@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="quantidade">Quantidade</label>
+    <input id="quantidade" type="number">
+    <label for="item">Item</label>
+    <input id="item" type="text">
+    <button id="adicionar">Adicionar</button>
+    <button id="limpar">Limpar</button>
+    <ul id="lista">
+
+    </ul>
+    <script>
+        var quantidade = document.getElementById("quantidade");
+        var item = document.getElementById("item");
+        var lista = document.getElementById("lista");
+        var adicionar = document.getElementById("adicionar");
+        var limpar = document.getElementById("limpar");
+
+        adicionar.addEventListener("click", function() {
+            if (quantidade.value && item.value) {
+                var li = document.createElement("li");
+                li.textContent = quantidade.value + " " + item.value;
+                lista.appendChild(li);
+            } 
+        });
+
+        limpar.addEventListener("click", function() {
+            lista.innerHTML = "";
+        });
+    </script>
+
+
+</body>
+
+</html>

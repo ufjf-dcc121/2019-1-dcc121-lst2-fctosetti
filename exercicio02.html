@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <label for="entrada">Entrada</label>
+    <input id="entrada">
+    <button id="empilhar">Empilhar</button>
+    <button id="desempilhar">Desempilhar</button>
+    <ol id="lista">
+
+    </ol>
+    <script>
+        var entrada = document.getElementById("entrada");
+        var lista = document.getElementById("lista");
+        var empilhar = document.getElementById("empilhar");
+        var desempilhar = document.getElementById("desempilhar");
+
+        empilhar.addEventListener("click", function() {
+            if (entrada.value) {
+                var li = document.createElement("li");
+                li.textContent = entrada.value;;
+                lista.appendChild(li);
+            } 
+        });
+
+        desempilhar.addEventListener("click", function() {
+            if (lista.lastChild) {
+                lista.removeChild(lista.lastChild)
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

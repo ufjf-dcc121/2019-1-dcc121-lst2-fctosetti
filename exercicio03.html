@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form id="form1">
+        <div>
+            <label for="nome">Nome: </label>
+            <input id="nome">
+        </div>
+        <div>
+            <label for="idade">Idade: </label>
+            <input id="idade" type="number">
+        </div>
+        <button id="enviar" type="button">Enviar</button>
+        <button id="excluir" type="button" style="visibility: hidden">Excluir</button>
+        <div>
+            <label for="adultos">Adultos</label>
+            <ul id="adultos">
+        </div>
+        </ul>
+        <div>
+            <label for="estudantes">Estudantes</label>
+            <ul id="estudantes">
+            </ul>
+        </div>
+    </form>
+    <script>
+
+        var enviar = document.getElementById("enviar");
+        var excluir = document.getElementById("excluir");
+        var adultos = document.getElementById("adultos");
+        var estudantes = document.getElementById("estudantes");
+
+        enviar.addEventListener("click", function () {
+            if (document.forms.form1.nome.value && document.forms.form1.idade.value) {
+                var li = document.createElement("li");
+                li.contentEditable = true;
+
+                var el = function() {
+                    if (li.parentElement == adultos) {
+                        adultos.removeChild(li);
+                    } else if (li.parentElement == estudantes) {
+                        estudantes.removeChild(li);
+                    }   
+                    excluir.style.visibility = "hidden";              
+                    excluir.removeEventListener("click", this); 
+                }
+
+                li.addEventListener("focus", function() {
+                    excluir.addEventListener("click", el);
+                    excluir.style.visibility = "visible";
+                })
+
+                li.addEventListener("focusout", function(event) {
+                    if (event.relatedTarget != excluir) {
+                        excluir.removeEventListener("click", el); 
+                        excluir.style.visibility = "hidden"; 
+                    }
+                })
+
+                li.textContent = document.forms.form1.nome.value + " - " + document.forms.form1.idade.value;
+                if (document.forms.form1.idade.value > 18) {
+                    adultos.appendChild(li);
+                } else {
+                    estudantes.appendChild(li);           
+                }
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
