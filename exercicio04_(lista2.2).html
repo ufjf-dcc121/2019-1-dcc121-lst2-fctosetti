@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form id="form1">
+        <div>
+            <label for="animal">Animal: </label>
+            <input id="animal">
+        </div>
+        <div>
+            <label for="altura">Altura: </label>
+            <input id="altura" type="number">
+        </div>
+        <div>
+            <label for="peso">Peso: </label>
+            <input id="peso" type="number">
+        </div>
+        <div>
+            <label for="velocidade">Velocidade: </label>
+            <input id="velocidade" type="number">
+        </div>
+        <div>
+            <label for="idade">Idade máxima: </label>
+            <input id="idade" type="number">
+        </div>
+        <button id="enviar" type="button">Enviar</button>
+        <table id="tabela">
+            <thead>
+                <th>Aimal</th>
+                <th>Altura</th>
+                <th>Peso</th>
+                <th>Velocidade</th>
+                <th>Idade máxima</th>
+            </thead>
+            <tbody id="corpoTabela">
+            </tbody>
+            <tfoot id="rodapeTabela">       
+                <th></th> 
+                <th id="mediaAltura"></th>
+                <th id="mediaPeso"></th>
+                <th id="mediaVelocidade"></th>    
+                <th id="mediaLongevidade"></th>       
+            </tfoot>
+        </table>
+        <h1 id="maisAlto"></h1>
+        <h1 id="maisPesado"></h1>
+        <h1 id="maisVeloz"></h1>
+        <h1 id="maisLongevo"></h1>
+        <h1 id="acimaPeso"></h1>
+    </form>
+
+    <script>
+        var valorMaisAlto;
+        var valorMaisPesado;
+        var valorMaisVeloz;
+        var valorMaisLongevo;
+
+        var totalAltura = 0;
+        var totalPeso = 0;
+        var totalVelocidade = 0;
+        var totalLongevidade = 0;
+
+        var tabela = document.getElementById("corpoTabela")
+        var rodape = document.getElementById("rodapeTabela")
+        var enviar = document.getElementById("enviar");
+        var maisAlto = document.getElementById("maisAlto");
+        var maisPesado = document.getElementById("maisPesado");
+        var maisVeloz = document.getElementById("maisVeloz");
+        var acimaPeso = document.getElementById("acimaPeso");
+        var maisLongevo = document.getElementById("maisLongevo");
+        var mediaAltura = document.getElementById("mediaAltura");
+        var mediaPeso = document.getElementById("mediaPeso");
+        var mediaVelocidade = document.getElementById("mediaVelocidade");
+        var mediaLongevidade = document.getElementById("mediaLongevidade");
+
+        var f = document.forms.form1
+
+        enviar.addEventListener("click", function () {
+            if (f.animal.value && f.peso.value && f.velocidade.value && f.idade.value) {
+                var tr = document.createElement("tr");
+
+                var tdAnimal = document.createElement("td");
+                tdAnimal.textContent = f.animal.value;
+                tr.appendChild(tdAnimal);
+
+                var tdAltura = document.createElement("td");
+                tdAltura.textContent = f.altura.value;
+                tr.appendChild(tdAltura);
+
+                var tdPeso = document.createElement("td");
+                tdPeso.textContent = f.peso.value;
+                tr.appendChild(tdPeso);
+
+                var tdVelocidade = document.createElement("td");
+                tdVelocidade.textContent = f.velocidade.value;
+                tr.appendChild(tdVelocidade);
+
+                var tdIdade = document.createElement("td");
+                tdIdade.textContent = f.idade.value;
+                tr.appendChild(tdIdade);
+
+                tabela.appendChild(tr);
+
+                if (!valorMaisAlto || Number.parseFloat(valorMaisAlto) < Number.parseFloat(f.altura.value)) {
+                    maisAlto.textContent = "O animal mais alto é " + f.animal.value;
+                    valorMaisAlto = f.altura.value;
+                }
+
+                if (!valorMaisPesado || Number.parseFloat(valorMaisPesado) < Number.parseFloat(f.peso.value)) {
+                    maisPesado.textContent = "O animal mais pesado é " + f.animal.value;
+                    valorMaisPesado = f.peso.value;
+                }
+
+                if (!valorMaisVeloz || Number.parseFloat(valorMaisVeloz) < Number.parseFloat(f.velocidade.value)) {
+                    maisVeloz.textContent = "O animal mais veloz é " + f.animal.value;
+                    valorMaisVeloz = f.velocidade.value;
+                }
+
+                if (!valorMaisLongevo || Number.parseFloat(valorMaisLongevo) < Number.parseFloat(f.idade.value)) {
+                    maisLongevo.textContent = "O animal mais longevo é " + f.animal.value;
+                    valorMaisLongevo = f.idade.value;
+                }
+
+                totalAltura += Number.parseFloat(f.altura.value);
+                totalPeso += Number.parseFloat(f.peso.value);
+                totalVelocidade += Number.parseFloat(f.velocidade.value);
+                totalLongevidade += Number.parseFloat(f.idade.value);
+
+                mediaAltura.textContent = totalAltura / tabela.childElementCount;
+                mediaPeso.textContent = totalPeso / tabela.childElementCount;
+                mediaVelocidade.textContent = totalVelocidade / tabela.childElementCount;
+                mediaLongevidade.textContent = totalLongevidade / tabela.childElementCount;
+                
+                var quantidadeAcimaPeso = 0;
+                var children = tabela.children;
+                for(var i = 0; i < children.length; i++) {
+                    var animal = children[i];
+                    var peso = Number.parseFloat(animal.children[2].textContent)
+                    if (peso > Number.parseFloat(mediaPeso.textContent)) {
+                        quantidadeAcimaPeso++;
+                    }
+                }
+                acimaPeso.textContent = "Há " + quantidadeAcimaPeso + " animal(is) acima do peso";
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
